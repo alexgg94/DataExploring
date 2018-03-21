@@ -3,7 +3,6 @@ import os.path
 import sys
 import csv
 from colorama import Fore
-from pprint import pprint
 
 def write_to_file(line_to_append):
     with open("output.csv", 'a+') as outfile:
@@ -22,6 +21,8 @@ def process_json_file(fileName):
 def process_csv_file(fileName):
     try:
         with open(fileName) as file_content:
+            #Skip headers
+            next(file_content)
             for line in file_content:
                 write_to_file(line)
         print(Fore.GREEN + fileName + " Has been processed successfully")
