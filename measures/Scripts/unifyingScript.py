@@ -2,7 +2,18 @@ import json
 import os.path
 import sys
 import csv
+import pandas as pd
 from colorama import Fore
+
+def sort():
+    try:
+        df = pd.read_csv("output.csv", names = ["sensor", "value", "time"])
+        df["time"] = pd.to_datetime(df["time"])
+        df = df.sort_values(by=["time"], ascending=True)
+        df.to_csv("sorted_output.csv", header=["sensor", "value", "time"], index=None)
+        print(Fore.GREEN + "Sorting process done! ")
+    except:
+        print(Fore.RED + "Error while sorting file ")
 
 def write_to_file(line_to_append):
     with open("output.csv", 'a+') as outfile:
@@ -35,6 +46,7 @@ if __name__ == '__main__':
         "Only .csv and .json files will be processed")
     
     else:
+        """
         for argument in sys.argv[1:]:
             extension = os.path.splitext(argument)[1]
             if extension == ".csv":
@@ -47,5 +59,8 @@ if __name__ == '__main__':
 
             else:
                 print(Fore.YELLOW +argument + " Ignored")
+        """
+        print(Fore.BLACK + "Sorting output by date...")
+        sort()
 
 
