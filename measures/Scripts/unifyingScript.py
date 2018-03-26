@@ -46,7 +46,6 @@ if __name__ == '__main__':
         "Only .csv and .json files will be processed")
     
     else:
-        """
         for argument in sys.argv[1:]:
             extension = os.path.splitext(argument)[1]
             if extension == ".csv":
@@ -59,7 +58,6 @@ if __name__ == '__main__':
 
             else:
                 print(Fore.YELLOW +argument + " Ignored")
-        """
         print(Fore.BLACK + "Sorting output by date...")
         sort()
 
