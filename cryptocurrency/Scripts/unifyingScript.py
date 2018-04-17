@@ -15,7 +15,6 @@ def init():
     for file in os.listdir(pathdest):
         os.remove(pathdest + file)
         
-        
 def join_temporal_files(file_index):
     try:
         for _file in os.listdir(pathtemp):
@@ -40,25 +39,22 @@ def process_csv_file(fileName, file_index):
     except:
         print(Fore.RED + "Error while processing " + fileName)
 
-
-init()
-file_index = 0
-for file in os.listdir(pathori):
-    #print (file)
-    name = os.path.splitext(file)[0]
-    extension = os.path.splitext(file)[1]
-    datatype = name.split("_")[-1]    
-    #print (name, extension, datatype)
-    if extension == ".csv":
-        if datatype == "price":
-            print(Fore.BLACK + "Processing " + file)
-            process_csv_file(pathori + file, file_index)
-            file_index += 1
+if __name__ == '__main__':
+    init()
+    file_index = 0
+    for file in os.listdir(pathori):
+        name = os.path.splitext(file)[0]
+        extension = os.path.splitext(file)[1]
+        datatype = name.split("_")[-1]    
+        if extension == ".csv":
+            if datatype == "price":
+                print(Fore.BLACK + "Processing " + file)
+                process_csv_file(pathori + file, file_index)
+                file_index += 1
+            else:
+                print(Fore.YELLOW +file + " Ignored")
         else:
             print(Fore.YELLOW +file + " Ignored")
-    else:
-        print(Fore.YELLOW +file + " Ignored")
-    print ("")
-    
-print(Fore.BLACK + "Joining temporal files ")
-join_temporal_files(file_index)
+        
+    print(Fore.BLACK + "Joining temporal files ")
+    join_temporal_files(file_index)
