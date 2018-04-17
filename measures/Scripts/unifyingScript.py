@@ -55,19 +55,25 @@ def process_csv_file(fileName):
     except:
         print(Fore.RED + "Error while processing " + fileName)
 
-init()
-for file in os.listdir(pathori):
-    print (file)
-    extension = os.path.splitext(file)[1]
-    if extension == ".csv":
-        print(Fore.BLACK + "Processing " + file)
-        process_csv_file(pathori+file)
-    elif extension == ".json":
-        print(Fore.BLACK + "Processing " + file)
-        process_json_file(pathori+file)
+if __name__ == '__main__':
+    if len(sys.argv) == 1:
+        print ("Usage -> python unifyingScript.py files_directory <- \n" \
+        "Only .csv and .json files will be processed")
+
     else:
-        print(Fore.YELLOW +file + " Ignored")
-print(Fore.BLACK + "Sorting output by date...")
-sort()
+        init()
+        for file in os.listdir(pathori):
+            print (file)
+            extension = os.path.splitext(file)[1]
+            if extension == ".csv":
+                print(Fore.BLACK + "Processing " + file)
+                process_csv_file(pathori+file)
+            elif extension == ".json":
+                print(Fore.BLACK + "Processing " + file)
+                process_json_file(pathori+file)
+            else:
+                print(Fore.YELLOW +file + " Ignored")
+        print(Fore.BLACK + "Sorting output by date...")
+        sort()
 
 
