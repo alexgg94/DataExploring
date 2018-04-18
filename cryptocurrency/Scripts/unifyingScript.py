@@ -15,10 +15,21 @@ def init():
     for file in os.listdir(pathdest):
         os.remove(pathdest + file)
         
+def sort():
+    try:
+        df = pd.read_csv(pathdest+"output.csv")
+        df["Date"] = pd.to_datetime(df["Date"])
+        df = df.sort_values(by=["Date"], ascending=True)
+        df = pd.pivot_table(df, index=["Date"], columns=["Cryptocurrency"], values="Close", fill_value="NaN")
+        df.reset_index(inplace=True)
+        df.to_csv(pathdest+"sorted_output.csv", index=None)
+        print(Fore.GREEN + "Sorting process done! ")
+    except:
+        print(Fore.RED + "Error while sorting file ")
+
 def join_temporal_files(file_index):
     try:
         for _file in os.listdir(pathtemp):
-            print (_file)
             if not os.path.isfile(pathdest + "output.csv"):
                 df = pd.read_csv(pathtemp + _file)
                 df.to_csv(pathdest + "output.csv", header=["Cryptocurrency", "Date", "Open", "High", "Low", "Close", "Volume", "Market Cap"], index=None)
@@ -58,3 +69,5 @@ if __name__ == '__main__':
         
     print(Fore.BLACK + "Joining temporal files ")
     join_temporal_files(file_index)
+    print(Fore.BLACK + "Sorting output by date...")
+    sort()
