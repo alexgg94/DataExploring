@@ -27,7 +27,7 @@ def sort():
     except:
         print(Fore.RED + "Error while sorting file ")
 
-def join_temporal_files(file_index):
+def join_temporal_files():
     try:
         for _file in os.listdir(pathtemp):
             if not os.path.isfile(pathdest + "output.csv"):
@@ -37,6 +37,7 @@ def join_temporal_files(file_index):
                 df = pd.read_csv(pathtemp + _file)
                 with open(pathdest + 'output.csv', 'a') as output_file:
                     df.to_csv(output_file, header=None, index=None)
+            os.remove(pathtemp + _file)
         print(Fore.GREEN + "Joining process done! ")
     except:
         print(Fore.RED + "Error while joining files ")
@@ -68,6 +69,6 @@ if __name__ == '__main__':
             print(Fore.YELLOW +file + " Ignored")
         
     print(Fore.BLACK + "Joining temporal files ")
-    join_temporal_files(file_index)
+    join_temporal_files()
     print(Fore.BLACK + "Sorting output by date...")
     sort()
